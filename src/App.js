@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button } from 'reactstrap';
+//import { Button } from 'reactstrap';
 
 class App extends Component {
   constructor(props){
@@ -8,7 +8,8 @@ class App extends Component {
 
     this.state={
       newItem:"",
-      list:[]
+      list:[],
+      displayRandom:""
     }
   }
   updateInput(key, value){
@@ -19,20 +20,37 @@ class App extends Component {
   }
 
   addItem(){
+    // get a random number between 0 and 9
+    const displayRandom = Math.floor(Math.random() * 10);
     //create item with unique id
     const newItem={
-      id: 1 + Math.random(), // not sure if random would actually get unique?
-      value: this.state.newItem.slice()
+      id: displayRandom.toString(),//1 + Math.random(),
+      // add the random number to list
+      value: displayRandom
     };
    // copy current list
    const list = [...this.state.list]
 
+   console.log(displayRandom.toString());//.includes(displayRandom));
    // add new item
-   list.push(newItem);
+   var isIn = list.find(a => a.id === displayRandom.toString());
+
+   if (isIn == undefined){
+     console.log("Not present")
+     list.push(newItem);
+   }
+   else{
+     console.log("was in");
+     console.log(isIn.name);
+   }
+
+
+
    // update state with newlist and resent newItem item
    this.setState({
      list,
-     newItem:""
+     newItem:"",
+     displayRandom
    });
 
   }
@@ -53,6 +71,8 @@ class App extends Component {
       <div className="App">
         <div>
           Add an Item...
+          {this.state.displayRandom}
+
           <br/>
           <input
             type="text"
