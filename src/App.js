@@ -8,36 +8,31 @@ class App extends Component {
 
     this.state={
       newItem:"",
-      list:[],
-      displayRandom:""
+      seenList:[],
+      favList:[],
+      displayRandomPoke:""
     }
-  }
-  updateInput(key, value){
-    //update react state
-    this.setState({
-      [key]:value
-    });
   }
 
   addItem(){
     // get a random number between 0 and 9
-    const displayRandom = Math.floor(Math.random() * 10);
+    const displayRandomPoke = Math.floor(Math.random() * 10);
     //create item with unique id
     const newItem={
-      id: displayRandom.toString(),//1 + Math.random(),
+      id: displayRandomPoke.toString(),//1 + Math.random(),
       // add the random number to list
-      value: displayRandom
+      value: displayRandomPoke
     };
    // copy current list
-   const list = [...this.state.list]
+   const seenList = [...this.state.seenList]
 
-   console.log(displayRandom.toString());//.includes(displayRandom));
+   console.log(displayRandomPoke.toString());//.includes(displayRandomPoke));
    // add new item
-   var isIn = list.find(a => a.id === displayRandom.toString());
+   var isIn = seenList.find(a => a.id === displayRandomPoke.toString());
 
-   if (isIn == undefined){
+   if (isIn === undefined){
      console.log("Not present")
-     list.push(newItem);
+     seenList.push(newItem);
    }
    else{
      console.log("was in");
@@ -48,9 +43,9 @@ class App extends Component {
 
    // update state with newlist and resent newItem item
    this.setState({
-     list,
+     seenList,
      newItem:"",
-     displayRandom
+     displayRandomPoke
    });
 
   }
@@ -60,10 +55,10 @@ class App extends Component {
 
   deleteItem(id) {
     // copy current list
-    const list = [...this.state.list];
+    const seenList = [...this.state.seenList];
     // filter out item being deleted
-    const updatedList = list.filter(item => item.id !== id);
-    this.setState({list:updatedList});
+    const updatedList = seenList.filter(item => item.id !== id);
+    this.setState({seenList:updatedList});
   }
 
   render() {
@@ -71,7 +66,7 @@ class App extends Component {
       <div className="App">
         <div>
           Add an Item...
-          {this.state.displayRandom}
+          {this.state.displayRandomPoke}
 
           <br/>
           <input
@@ -88,7 +83,7 @@ class App extends Component {
           </button>
           <br/>
           <ul>
-            {this.state.list.map(item => {
+            {this.state.seenList.map(item => {
               return(
                 <li key={item.id}>
                   {item.value}
