@@ -7,15 +7,15 @@ class App extends Component {
     super(props);
 
     this.state={
-      newItem:"",
+      newItem:"", // will become newPoke
       seenList:[],
       favList:[],
       displayRandomPoke:""
     }
   }
 
-  addItem(){
-    // get a random number between 0 and 9
+  addItem(){ // will become SHOW NEW POKE
+    // get a random number between 0 and 9 - will fetch pokemon
     const displayRandomPoke = Math.floor(Math.random() * 10);
     //create item with unique id
     const newItem={
@@ -33,21 +33,35 @@ class App extends Component {
    if (isIn === undefined){
      console.log("Not present")
      seenList.push(newItem);
+     this.setState({displayRandomPoke});
+     this.setState({
+       seenList,
+       newItem
+     });
    }
    else{
      console.log("was in");
      console.log(isIn.name);
+     console.log(displayRandomPoke);
+     this.setState({displayRandomPoke:""});
+     this.setState({newItem:""});
+     //displayRandomPoke = "";
+     this.addItem();
    }
-
-
-
    // update state with newlist and resent newItem item
-   this.setState({
-     seenList,
-     newItem:"",
-     displayRandomPoke
-   });
 
+
+  }
+
+  saveToFav(){
+    const favList = [...this.state.favList]
+    const newItem = this.state.newItem;
+    favList.push(newItem);
+
+    this.setState({
+      newItem:"",
+      favList
+    });
   }
 
 
@@ -55,35 +69,46 @@ class App extends Component {
 
   deleteItem(id) {
     // copy current list
-    const seenList = [...this.state.seenList];
+    const favList = [...this.state.favList];
     // filter out item being deleted
-    const updatedList = seenList.filter(item => item.id !== id);
-    this.setState({seenList:updatedList});
+    const updatedList = favList.filter(item => item.id !== id);
+    this.setState({favList:updatedList});
   }
 
   render() {
     return (
       <div className="App">
         <div>
-          Add an Item...
+          Pick A Pokemon
+          <br/>
           {this.state.displayRandomPoke}
 
           <br/>
-          <input
-            type="text"
-            placeholder="Type item here"
-            value={this.state.newItem}
-            onChange={e => this.updateInput("newItem", e.target.value)}
 
-          />
           <button
             onClick={() => this.addItem()}
           >
-          Add
+          Show New Pokemon
+          </button>
+          <button onClick={() => this.saveToFav()} disabled={!this.state.newItem}>
+          Save to Favourite list
           </button>
           <br/>
+          Seen List:
           <ul>
             {this.state.seenList.map(item => {
+              return(
+                <li key={item.id}>
+                  {item.value}
+
+                </li>
+              )
+            })}
+          </ul>
+          <br/>
+          Fav List:
+          <ul>
+            {this.state.favList.map(item => {
               return(
                 <li key={item.id}>
                   {item.value}
