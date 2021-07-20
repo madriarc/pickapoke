@@ -14,7 +14,7 @@ class App extends Component {
     }
   }
 
-  addItem(){ // will become SHOW NEW POKE
+  showNewPoke(){ // will become SHOW NEW POKE
     // get a random number between 0 and 9 - will fetch pokemon
     const displayRandomPoke = Math.floor(Math.random() * 10);
     //create item with unique id
@@ -46,7 +46,7 @@ class App extends Component {
      this.setState({displayRandomPoke:""});
      this.setState({newItem:""});
      //displayRandomPoke = "";
-     this.addItem();
+     this.showNewPoke();
    }
    // update state with newlist and resent newItem item
 
@@ -86,7 +86,7 @@ class App extends Component {
           <br/>
 
           <button
-            onClick={() => this.addItem()}
+            onClick={() => this.showNewPoke()}
           >
           Show New Pokemon
           </button>
