@@ -11,6 +11,15 @@
   font-family: 'Neue Helvetica W01', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
   font-size: 1.75rem;
   text-transform: capitalize;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.image-div{
+  height: 250px;
+  width:100%;
 }
 
 .app-button{
@@ -25,10 +34,9 @@
 .cross-button{
   background-color: #ffef5e;
   font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
-  font-size: 0.75rem;
+  font-weight: 400;
+  font-size: 1rem;
   webkit-font-smoothing: antialiased;
-  font-weight: 700;
-  border-color: #ffef5e;
 }
 
 .app-title{

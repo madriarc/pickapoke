@@ -111,12 +111,13 @@ class App extends Component {
           <br/>
           <h1 className="app-title">Pick a Pokemon</h1>
           <br/>
+          <div className="image-div">
           <div className="name-text">
-          {this.state.pokeName}
+            {this.state.pokeName}
+            </div>
+            <br/>
+            <img src={this.state.picOfPoke} alt="pokemon"/>
           </div>
-          <br/>
-          <img src={this.state.picOfPoke} alt="pokemon"/>
-          <br/> <br/>
           <button className="app-button" onClick={() => this.showNewPoke()}>
           Show New Pokemon
           </button>
@@ -131,7 +132,7 @@ class App extends Component {
               return(
                 <li  key={item.id}>
                   <br/>
-                  <div className="name-text">
+                  <div className="name-text" >
                   {item.name}
                   &nbsp;
                   <button className="cross-button"
