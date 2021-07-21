@@ -8,134 +8,98 @@ class App extends Component {
     super(props);
 
     this.state={
-      newItem:"", // will become newPoke
+      newPoke:"", // will become newPoke
       seenList:[],
       favList:[],
-      displayRandomPoke:"",
-      pokeName:"",
-      picOfPoke:""
+      displayRandomPoke:"", // stores the ID number for pokemon
+      pokeName:"", // stores the pokemon name
+      picOfPoke:"", // stores image url for the pokemon
+      noOfPokemon:898 // max pokemon
     }
   }
 
 
 
-  showNewPoke(){ // will become SHOW NEW POKE
-
-    var noOfPokemon = 10;
-    // get a random number between 0 and 9 - will fetch pokemon
+  showNewPoke(){
+    // NUMBER OF POKEMON TO AVOID INFITIE LOOP IF LIST FILLS UP
+    const noOfPokemon = this.state.noOfPokemon;
+    // get a random number between 1 and the max number of pokemon
     const displayRandomPoke = Math.floor(Math.random() * noOfPokemon) + 1;
+
+    // stores the list of pokemon have seen
     const seenList = [...this.state.seenList]
+    // keeps track of how many have been seen
     var totalSeen = Object.keys(seenList).length;
+    // check if the random number selected has already been added to the list
+    // ie, have we already seen this pokemon
     var isIn = seenList.find(a => a.id === displayRandomPoke.toString());
-    //const pokeName = this.state.pokeName;
-    //const picOfPoke = this.state.picOfPoke;
-    var pokeName = "";
-    var picOfPoke = "";
 
-
-
+    // async function to fetch the pokemon data
     const getPokemon = async() => {
-
       try{
         const url = 'https://pokeapi.co/api/v2/pokemon-form/' + displayRandomPoke + '/';
         const res = await axios.get(url);
-        pokeName = await res.data.name;
-        console.log(res);
 
-        console.log(res.data.name);
         this.setState({pokeName:res.data.name});
-        //pokeName = res.data.name;
-        console.log(res.data.sprites.front_default);
         this.setState({picOfPoke:res.data.sprites.front_default})
 
-        const newItem={
-          id: displayRandomPoke.toString(),//1 + Math.random(),
-          // add the random number to list
+        // create the newPoke
+        const newPoke={
+          id: displayRandomPoke.toString(),//use pokemon ID as unique ID
           value: displayRandomPoke,
-          name: res.data.name,
-          image: res.data.sprites.front_default
+          name: res.data.name, // get the pokemon name
+          image: res.data.sprites.front_default // get the url for the .png
         };
-
-        seenList.push(newItem);
+        // add the new poke to the seen list
+        seenList.push(newPoke);
+        // update seen list and newpoke value
         this.setState({displayRandomPoke});
         this.setState({
           seenList,
-          newItem
+          newPoke
         });
       } catch(e) {
         console.log(e);
       }
     };
-    // function getPokemon() {
-    //   let url = 'https://pokeapi.co/api/v2/pokemon-form/' + displayRandomPoke + '/';
-    //   fetch(url)
-    //   .then(response => res)
-    //   .then(console.log(res))
-    //   .catch(console.log)
-    // }
-
-
-    //var pokemon = Poke.getCharacteristicById(displayRandomPoke);
-    //create item with unique id
-
-    //this.setState({newItem.name: this.state.pokeName})
-   // copy current list
-
-   // add new item
-
+    // check to make sure haven't seen pokemon before before calling
    if (isIn === undefined){
-     console.log("Not present")
      getPokemon();
-     //newItem.name = this.state.pokeName;//"thsiName";
-     console.log("Here is pokeNameTHIS: " + pokeName);
-     console.log("Here is pokeName: " + this.state.pokeName);
-     // seenList.push(newItem);
-     // this.setState({displayRandomPoke});
-     // this.setState({
-     //   seenList,
-     //   newItem
-     // });
-     console.log("Here is pokeName2: " + this.state.pokeName);
    }
    else{
-     console.log("was in");
-     console.log(isIn.name);
-     console.log(displayRandomPoke);
+     // clear variables and recall function to get a new value
      this.setState({displayRandomPoke:""});
-     this.setState({
-       newItem:""});
-     //displayRandomPoke = "";
+     this.setState({newPoke:""});
+     // only call for a new pokemon if there are still pokemon haven't seen
      if(totalSeen < noOfPokemon)
      {
-
        this.showNewPoke();
-
      }
    }
-   // update state with newlist and resent newItem item
-
-
   }
 
+// Function to save the pokemon to the favourite list
   saveToFav(){
+    // get current fav list
     const favList = [...this.state.favList]
-    const newItem = this.state.newItem;
-    favList.push(newItem);
-
+    // get current pokemon
+    const newPoke = this.state.newPoke;
+    // save current pokemon to list
+    favList.push(newPoke);
+    // update list and clear the pokemon
     this.setState({
-      newItem:"",
+      newPoke:"",
       favList
     });
   }
 
-
-
-
+// Function to delete pokemon from the favlist
   deleteItem(id) {
     // copy current list
     const favList = [...this.state.favList];
     // filter out item being deleted
     const updatedList = favList.filter(item => item.id !== id);
+    // update the list
     this.setState({favList:updatedList});
   }
 
@@ -145,44 +109,22 @@ class App extends Component {
         <div>
           Pick A Pokemon
           <br/>
-          {this.state.displayRandomPoke}
-          <br/>
           {this.state.pokeName}
           <br/>
           <img src={this.state.picOfPoke} alt="pokemon"/>
-
           <br/>
-          <button
-            onClick={() => this.showNewPoke()}
-          >
+          <button onClick={() => this.showNewPoke()}>
           Show New Pokemon
           </button>
-          <button onClick={() => this.saveToFav()} disabled={!this.state.newItem}>
+          <button onClick={() => this.saveToFav()} disabled={!this.state.newPoke}>
           Save to Favourite list
           </button>
-          <br/>
-          Seen List:
-          <ul>
-            {this.state.seenList.map(item => {
-              return(
-                <li key={item.id}>
-                  {item.value}
-                  <br/>
-                  {item.name}
-                  <br/>
-                  <img src={item.image} alt="pokemon"/>
-
-                </li>
-              )
-            })}
-          </ul>
           <br/>
           Fav List:
           <ul>
             {this.state.favList.map(item => {
               return(
                 <li key={item.id}>
-                  {item.value}
                   <br/>
                   {item.name}
                   <br/>
