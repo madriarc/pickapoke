@@ -1,0 +1,54 @@
+.App{
+  background: #0073cf;
+  font-weight: 700;
+  font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+}
+
+
+.name-text{
+  webkit-font-smoothing: antialiased;
+  color: white;
+  font-family: 'Neue Helvetica W01', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+  font-size: 1.75rem;
+  text-transform: capitalize;
+}
+
+.app-button{
+  background-color: #ffef5e;
+  font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  font-size: 1.75rem;
+  webkit-font-smoothing: antialiased;
+  font-weight: 600;
+  border-color: #ffef5e;
+  padding: 15px 32px;
+}
+.cross-button{
+  background-color: #ffef5e;
+  font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  font-size: 0.75rem;
+  webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  border-color: #ffef5e;
+}
+
+.app-title{
+  font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  color: white;
+  font-size: 70px;
+  webkit-font-smoothing: antialiased;
+  display: block;
+  font-weight: 700;
+}
+
+.app-h2{
+  font-family: "Neue Helvetica W01","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
+  color: white;
+  font-size: 50px;
+  webkit-font-smoothing: antialiased;
+  display: block;
+  font-weight: 700;
+}
+
+.app-ul{
+    list-style-type: none;
+}

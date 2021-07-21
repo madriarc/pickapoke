@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import './App.css';
 
 //import { Button } from 'reactstrap';
 
@@ -13,7 +14,7 @@ class App extends Component {
       favList:[],
       displayRandomPoke:"", // stores the ID number for pokemon
       pokeName:"", // stores the pokemon name
-      picOfPoke:"", // stores image url for the pokemon
+      picOfPoke:"https://pngimg.com/uploads/pokeball/small/pokeball_PNG24.png", // stores image url for the pokemon
       noOfPokemon:898 // max pokemon
     }
   }
@@ -105,34 +106,41 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div>
-          Pick A Pokemon
+      <div className="App" align="center">
+        <div >
           <br/>
+          <h1 className="app-title">Pick a Pokemon</h1>
+          <br/>
+          <div className="name-text">
           {this.state.pokeName}
+          </div>
           <br/>
           <img src={this.state.picOfPoke} alt="pokemon"/>
-          <br/>
-          <button onClick={() => this.showNewPoke()}>
+          <br/> <br/>
+          <button className="app-button" onClick={() => this.showNewPoke()}>
           Show New Pokemon
           </button>
-          <button onClick={() => this.saveToFav()} disabled={!this.state.newPoke}>
+          &nbsp;
+          <button className="app-button" onClick={() => this.saveToFav()} disabled={!this.state.newPoke}>
           Save to Favourite list
           </button>
-          <br/>
-          Fav List:
-          <ul>
+          <br/><br/>
+          <h2 className="app-h2">Favourite List:</h2>
+          <ul className="app-ul">
             {this.state.favList.map(item => {
               return(
-                <li key={item.id}>
+                <li  key={item.id}>
                   <br/>
+                  <div className="name-text">
                   {item.name}
-                  <br/>
-                  <img src={item.image} alt="pokemon"/>
-                  <button
+                  &nbsp;
+                  <button className="cross-button"
                     onClick={() => this.deleteItem(item.id)}>
                   X
                   </button>
+                  </div>
+                  <br/>
+                  <img src={item.image} alt="pokemon"/>
                 </li>
               )
             })}
